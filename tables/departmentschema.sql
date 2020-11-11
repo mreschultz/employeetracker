@@ -3,11 +3,6 @@ DROP DATABASE IF EXISTS department_db;
 CREATE DATABASE department_db;
 USE department_db;
 
-### Schema
-DROP DATABASE IF EXISTS department_db;
-CREATE DATABASE department_db;
-USE department_db;
-
 CREATE TABLE department
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -27,8 +22,7 @@ CREATE TABLE employees
 	PRIMARY KEY (id)
 );
 
-SELECT * FROM roles;
-
+SELECT * FROM employees;
 
 CREATE TABLE roles
 (
@@ -38,4 +32,4 @@ CREATE TABLE roles
     department_id INT,
     PRIMARY KEY (id)
 );
-SELECT * FROM employee;
+SELECT * FROM roles;
