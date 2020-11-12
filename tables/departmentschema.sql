@@ -10,8 +10,6 @@ CREATE TABLE department
 	PRIMARY KEY (id)
 );
 
-SELECT * FROM department;
-
 CREATE TABLE employees
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -22,7 +20,6 @@ CREATE TABLE employees
 	PRIMARY KEY (id)
 );
 
-SELECT * FROM employees;
 
 CREATE TABLE roles
 (
@@ -32,4 +29,3 @@ CREATE TABLE roles
     department_id INT,
     PRIMARY KEY (id)
 );
-SELECT * FROM roles;

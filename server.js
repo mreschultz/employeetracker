@@ -1,55 +1,39 @@
-var mysql = require("mysql");
+
 var inquirer = require("inquirer");
+const { printTable } = require("console-table-printer");
+const DB = require("./DB/DB")
 
+start();
 
-var connection = mysql.createConnection({
-	host: "localhost",
-
-	// Your port; if not 3306
-	port: 3306,
-
-	// Your username
-	user: "root",
-
-	// Your password
-	password: "",
-	database: "department_db",
-});
-
-connection.connect(function (err) {
-	if (err) throw err;
-	start();
-});
-const cTable = require("console.table");
-console.table([
-	{
-		id: "1",
-		employee: "Riley Smith",
-		department: "Development",
-		role: "Developer",
-		salary: "75000",
-		managerId: "2",
-		departmentId: "3" 
-	},
-	{
-		id: "2",
-		employee: "Blake James",
-		department: "HR",
-		role: "Specialist",
-		salary: "75000",
-		managerId: "3",
-		departmentId: "4" 
-	},
-	{
-		id: "3", 
-		employee: "Jeff Washington",
-		department: "Management",
-		role: "Manager",
-		salary: "100000",
-		managerId: "4",
-		departmentId: "5" 
-	},
-]);
+// console.table([
+// 	{
+// 		id: "1",
+// 		employee: "Riley Smith",
+// 		department: "Development",
+// 		role: "Developer",
+// 		salary: "75000",
+// 		managerId: "2",
+// 		departmentId: "3" 
+// 	},
+// 	{
+// 		id: "2",
+// 		employee: "Blake James",
+// 		department: "HR",
+// 		role: "Specialist",
+// 		salary: "75000",
+// 		managerId: "3",
+// 		departmentId: "4" 
+// 	},
+// 	{
+// 		id: "3", 
+// 		employee: "Jeff Washington",
+// 		department: "Management",
+// 		role: "Manager",
+// 		salary: "100000",
+// 		managerId: "4",
+// 		departmentId: "5" 
+// 	},
+// ]);
 
 function start() {
 	inquirer
@@ -99,14 +83,10 @@ function start() {
 		});
 }
 function viewDepartment() {
-	var query = "SELECT * FROM department";
-	connection.query(query, function (_err, res) {
-		console.log(`DEPARTMENT:`);
-		res.forEach((department) => {
-			console.log(`ID: ${department.id} | Name: ${department.name}`);
-		});
-		start();
-	});
+	DB.findAllDepartments().then(results => {
+		printTable(results);
+		start()
+	})
 }
 
 function viewRole() {
