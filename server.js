@@ -1,39 +1,9 @@
-
 var inquirer = require("inquirer");
 const { printTable } = require("console-table-printer");
 const DB = require("./DB/DB")
+require('dotenv').config();
 
 start();
-
-// console.table([
-// 	{
-// 		id: "1",
-// 		employee: "Riley Smith",
-// 		department: "Development",
-// 		role: "Developer",
-// 		salary: "75000",
-// 		managerId: "2",
-// 		departmentId: "3" 
-// 	},
-// 	{
-// 		id: "2",
-// 		employee: "Blake James",
-// 		department: "HR",
-// 		role: "Specialist",
-// 		salary: "75000",
-// 		managerId: "3",
-// 		departmentId: "4" 
-// 	},
-// 	{
-// 		id: "3", 
-// 		employee: "Jeff Washington",
-// 		department: "Management",
-// 		role: "Manager",
-// 		salary: "100000",
-// 		managerId: "4",
-// 		departmentId: "5" 
-// 	},
-// ]);
 
 function start() {
 	inquirer
@@ -42,13 +12,13 @@ function start() {
 			type: "rawlist",
 			message: "What would you like to do?",
 			choices: [
-				"Add departments",
-				"Add roles",
-				"Add employees",
+				// "Add departments",
+				// "Add roles",
+				// "Add employees",
 				"View departments",
 				"View roles",
 				"View employees",
-				// "Update employee roles",
+
 			],
 		})
 		.then(function (answer) {
@@ -58,29 +28,47 @@ function start() {
 					break;
 
 				case "View roles":
-					viewRole();
+					viewRoles();
 					break;
 
 				case "View employees":
-					viewEmployee();
+					viewEmployees();
 					break;
-				case "Add departments":
-					addDepartment();
-					break;
-
-				case "Add roles":
-					addRole();
-					break;
-
-				case "Add employees":
-					addEmployee();
-					break;
-
-				case "Update employee roles":
-					roleUpdate();
-					break;
-			}
+					}
 		});
+// function start() {
+// 	inquirer
+// 		.prompt({
+// 			name: "addMenu",
+// 			type: "rawlist",
+// 			message: "What would you like to do?",
+// 			choices: [
+// 				"Add departments",
+// 				"Add roles",
+// 				"Add employees",
+// 				// "View departments",
+// 				// "View roles",
+// 				// "View employees",
+
+// 			],
+// 		})
+// 		.then(function (answer) {
+// 			switch (answer.addMenu) {			
+// 				case "Add departments":
+// 					addDepartment();
+// 					break;
+
+// 				case "Add roles":
+// 					addRole();
+// 					break;
+
+// 				case "Add employees":
+// 					addEmployee();
+// 					break;
+// 					default:
+// 						done();
+		// 	}
+		// });
 }
 function viewDepartment() {
 	DB.findAllDepartments().then(results => {
@@ -88,47 +76,35 @@ function viewDepartment() {
 		start()
 	})
 }
-
-function viewRole() {
-	var query = "SELECT * FROM roles";
-	connection.query(query, function (_err, res) {
-		console.log(`ROLE:`);
-		res.forEach((_role) => {
-			console.log(
-				`ID: ${roles.id} | Title: ${roles.title} | Salary: ${roles.salary} | Department ID: ${roles.department_id}`
-			);
-		});
-		start();
-	});
+function viewEmployees() {
+  DB.findAllEmployees().then(results => {
+    printTable(results);
+    start()
+  })
 }
+function viewRoles() {
+  DB.findAllRoles().then((results) => {
+    printTable(results);
+    start()
+  });
 
-function viewEmployee() {
-	var query = "SELECT * FROM employees";
-	connection.query(query, function (_err, res) {
-		console.log(`EMPLOYEES:`);
-		res.forEach((_employee) => {
-			console.log(
-				`ID: ${employees.id} | Name: ${employees.first_name} ${employees.last_name} | Role ID: ${employees.role_id} | Manager ID: ${employees.manager_id}`
-			);
-		});
-
-		function addDepartment() {
-			inquirer
-				.prompt({
-					name: "department",
-					type: "input",
-					message: "What is the name of the new department?",
-				})
-				.then(function (answer) {
-					var query = "INSERT INTO department (name) VALUES ( ? )";
-					connection.query(query, answer.department, function (_err, _res) {
-						console.log(
-							`You have added this department: ${answer.department.toUpperCase()}.`
-						);
-					});
-					ViewDepartments();
+ 
+		const addDepartment = () => {
+		inquirer
+			.prompt([
+				{
+					type: 'input',
+					name: 'departmentName',
+					message: 'What is the name of the new department?',
+				},
+			])
+			.then(function (answer) {
+				DB.createDepartment(answer.departmentName).then((response) => {
+					console.log(response);
+					viewDepartments();
 				});
-		}
+			});
+	}
 
 		function addRole() {
 			connection.query("SELECT * FROM department", function (err, res) {
@@ -353,5 +329,5 @@ function viewEmployee() {
 			});
 		}
 		start();
-	});
-}
+	}
+
