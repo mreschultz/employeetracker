@@ -10,8 +10,6 @@ A command-line application that allows the user to:
 
 - View departments, roles, employees
 
-- Update employee roles
-
 ## Instructions for use
 
-Install npm, inquirer, util and mysql. Then run the server.js file.
+Install npm, inquirer, util and mysql. Then run the server.js file using node.
