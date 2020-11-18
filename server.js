@@ -112,45 +112,45 @@ function RolesMenu() {
 		});
 	}
 function viewDepartments() {
-	DB.findDepartments().then(results => {
+	DB.findAllDepartments().then(results => {
 		printTable(results);
 		start()
 	})
 }
 function viewEmployees() {
-  DB.findEmployees().then(results => {
+  DB.findAllEmployees().then(results => {
     printTable(results);
     start()
   })
 }
 function viewRoles() {
-  DB.findRoles().then((results) => {
+  DB.findAllRoles().then((results) => {
     printTable(results);
     start()
   });
 }
 
  	
-	function addDepartments() {
-				inquirer
-					.prompt([
-						{
-							type: 'input',
-							name: 'departmentName',
-							message: 'What is the name of the department?',
-						},
-					])
-					.then(function (answer) {
-						DB.createDepartment(answer.departmentName).then((response) => {
-							console.log(response);
-							viewDepartments();
-						});
-					});
-			}
+	const addDepartments = () => {
+		inquirer
+			.prompt([
+				{
+					type: 'input',
+					name: 'departmentName',
+					message: 'What is the name of the department?',
+				},
+			])
+			.then(function (answer) {
+				DB.createDepartment(answer.departmentName).then((response) => {
+					console.log(response);
+					viewDepartments();
+				});
+			});
+	};
 async function addRoles() {
-  const departments = DB.findDepartments();
+  const departments = await DB.findAllDepartments();
   
-  const departmentChoices = departments.map(({ id, name }) => ({
+  const departmentChoices = departments(({ id, name }) => ({
     name: name,
     value: id
   }));
@@ -182,9 +182,9 @@ async function addRoles() {
 };
 async function addEmployees() {
 
-  const roles = DB.findRoles();
+  const roles = await DB.findAllRoles();
 
-  const roleChoices = roles.map(({ id, title }) => ({
+  const roleChoices = roles(({ id, title }) => ({
     name: title,
     value: id
   }));
