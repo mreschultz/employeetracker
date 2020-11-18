@@ -23,8 +23,6 @@ class DB {
   createRole(title) {
     return this.connection.query("INSERT INTO role SET ?", {
       title: title,
-      // salary: salary,
-      // department_id: department_id
     })
   }
   createEmployee(firstName, lastName, role_id) {

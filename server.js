@@ -131,22 +131,22 @@ function viewRoles() {
 }
 
  	
-	const addDepartments = () => {
-		inquirer
-			.prompt([
-				{
-					type: 'input',
-					name: 'departmentName',
-					message: 'What is the name of the department?',
-				},
-			])
-			.then(function (answer) {
-				DB.createDepartment(answer.departmentName).then((response) => {
-					console.log(response);
-					viewDepartments();
-				});
-			});
-	};
+	function addDepartments() {
+				inquirer
+					.prompt([
+						{
+							type: 'input',
+							name: 'departmentName',
+							message: 'What is the name of the department?',
+						},
+					])
+					.then(function (answer) {
+						DB.createDepartment(answer.departmentName).then((response) => {
+							console.log(response);
+							viewDepartments();
+						});
+					});
+			}
 async function addRoles() {
   const departments = await DB.findAllDepartments();
   
