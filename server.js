@@ -112,19 +112,19 @@ function RolesMenu() {
 		});
 	}
 function viewDepartments() {
-	DB.findAllDepartments().then(results => {
+	DB.findDepartments().then(results => {
 		printTable(results);
 		start()
 	})
 }
 function viewEmployees() {
-  DB.findAllEmployees().then(results => {
+  DB.findEmployees().then(results => {
     printTable(results);
     start()
   })
 }
 function viewRoles() {
-  DB.findAllRoles().then((results) => {
+  DB.findRoles().then((results) => {
     printTable(results);
     start()
   });
@@ -148,7 +148,7 @@ function viewRoles() {
 			});
 	};
 async function addRoles() {
-  const departments = await DB.findAllDepartments();
+  const departments = await DB.findDepartments();
   
   const departmentChoices = departments(({ id, name }) => ({
     name: name,
@@ -182,7 +182,7 @@ async function addRoles() {
 };
 async function addEmployees() {
 
-  const roles = await DB.findAllRoles();
+  const roles = await DB.findRoles();
 
   const roleChoices = roles(({ id, title }) => ({
     name: title,
