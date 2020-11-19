@@ -5,14 +5,14 @@ class DB {
         this.connection = connection;
     }
 
-    findAllDepartments() {
+    findDepartments() {
         return this.connection.query("SELECT * FROM department")
     }
         
-    findAllEmployees() {
+    findEmployees() {
     return this.connection.query("SELECT * FROM employees")
   }
-  findAllRoles() {
+  findRoles() {
     return this.connection.query("SELECT * FROM roles")
   }
   createDepartment(department_name) {
@@ -22,9 +22,7 @@ class DB {
   }
   createRole(title) {
     return this.connection.query("INSERT INTO role SET ?", {
-      title: title,
-      // salary: salary,
-      // department_id: department_id
+      title: title
     })
   }
   createEmployee(firstName, lastName, role_id) {
