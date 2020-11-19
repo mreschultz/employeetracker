@@ -150,7 +150,7 @@ function viewRoles() {
 async function addRoles() {
   const departments = await DB.findDepartments();
   
-  const departmentChoices = departments.map(({ id, name }) => ({
+  const departmentChoices = departments(({ id, name }) => ({
     name: name,
     value: id
   }));
@@ -184,7 +184,7 @@ async function addEmployees() {
 
   const roles = await DB.findRoles();
 
-  const roleChoices = roles.map(({ id, title }) => ({
+  const roleChoices = roles(({ id, title }) => ({
     name: title,
     value: id
   }));
